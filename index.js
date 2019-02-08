@@ -6,8 +6,9 @@ function encrypt(plainText, keyBase64, ivBase64) {
   var iv = Buffer.from(ivBase64, 'base64');
 
   var cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-  cipher.update(plainText, 'utf8', 'base64');
-  return cipher.final('base64');
+  var ciphered = cipher.update(plainText, 'utf8', 'base64');
+  ciphered += cipher.final('base64');
+  return ciphered;
 };
 
 function decrypt (messagebase64, keyBase64, ivBase64) {
@@ -16,8 +17,9 @@ function decrypt (messagebase64, keyBase64, ivBase64) {
   var iv = Buffer.from(ivBase64, 'base64');
 
   var decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
-  decipher.update(messagebase64, 'base64');
-  return decipher.final();
+  var deciphered = decipher.update(messagebase64, 'base64');
+  deciphered += decipher.final();
+  return deciphered;
 }
 
 // --------------------------------------- Testing ---------------------------------------
